@@ -61,4 +61,4 @@ has_one :address
 belongs_to :buyer
 
 
-[![Image from Gyazo](https://i.gyazo.com/5f344a4e1480e298d2ea1781b593a26a.png)](https://gyazo.com/5f344a4e1480e298d2ea1781b593a26a)
+[![Image from Gyazo](https://i.gyazo.com/54862fea1cd9947d707c1343eb64095a.png)](https://gyazo.com/54862fea1cd9947d707c1343eb64095a)
