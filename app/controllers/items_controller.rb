@@ -3,7 +3,8 @@ class ItemsController < ApplicationController
 
 
   def index
-
+    @items = Item.includes(:user)
+    @fees = Fee.all
   end
 
   def new
