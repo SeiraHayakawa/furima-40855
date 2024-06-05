@@ -4,10 +4,7 @@ RSpec.describe BuyerAddress, type: :model do
   before do
     @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item, user: @user)
-    @buyer_address = BuyerAddress.new(
-      user_id: @user.id, item_id: @item.id, post_code: '123-4567', prefecture_id: 2,
-      city: '横浜市緑区', address: '青山1-1-1', building_name: '柳ビル103', phone_number: '09012345678'
-    )
+    @buyer_address = FactoryBot.build(:buyer_address, user_id:@user.id, item_id:@item.id )
   end
 
   describe '商品購入機能' do
@@ -19,7 +16,7 @@ RSpec.describe BuyerAddress, type: :model do
       it '建物名が空でも購入できる' do
         @buyer_address.building_name = ''
         expect(@buyer_address).to be_valid
-      end
+      end 
     end
 
     context '商品を購入できない場合' do
@@ -81,6 +78,12 @@ RSpec.describe BuyerAddress, type: :model do
         @buyer_address.item_id = nil
         @buyer_address.valid?
         expect(@buyer_address.errors.full_messages).to include("Item can't be blank")
+      end
+
+      it "tokenが空では登録できないこと" do
+        @buyer_address.token = nil
+        @buyer_address.valid?
+        expect(@buyer_address.errors.full_messages).to include("Token can't be blank")
       end
     end
   end

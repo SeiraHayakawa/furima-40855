@@ -6,8 +6,7 @@ FactoryBot.define do
     address { '三田1-6-3' }  
     building_name { 'シティータワー麻布十番2107' }  
     phone_number { '09832727654' }  
+    token {"tok_abcdefghijk00000000000000000"}
 
-    association :user
-    association :item
   end
 end

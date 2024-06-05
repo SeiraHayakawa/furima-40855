@@ -3,6 +3,7 @@ class BuyersController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @buyer_address = BuyerAddress.new
   end
 
@@ -13,6 +14,7 @@ class BuyersController < ApplicationController
       @buyer_address.save
       redirect_to root_path
     else
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render :index
     end
   end
@@ -20,7 +22,7 @@ class BuyersController < ApplicationController
   private
 
   def buyer_address_params
-    params.require(:buyer_address).permit(:post_code, :prefecture_id, :city, :address, :building_name, )
+    params.require(:buyer_address).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number ).merge(user_id: current_user.id, item_id: params[:item_id] , token: params[:token])
   end
 
   def set_item
@@ -28,7 +30,7 @@ class BuyersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
       card: buyer_address_params[:token],
