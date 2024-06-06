@@ -20,3 +20,4 @@ function item_price (){
 
 
 window.addEventListener('turbo:load', item_price);
+window.addEventListener('turbo:render', item_price);
